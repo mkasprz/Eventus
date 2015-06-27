@@ -1,4 +1,4 @@
-name := """play-java-intro-preview"""
+name := """Eventus"""
 
 version := "1.0-SNAPSHOT"
 
