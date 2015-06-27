@@ -1,0 +1,17 @@
+@()
+
+@main("Welcome to Play") {
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+
+    <ul id="events"></ul>
+
+    <form method="POST" action="@routes.Application.addEvent()">
+        <input type="text" name="name"/>
+        <button>Add Event</button>
+    </form>
+
+    <form action="/events">
+        <button>Events</button>
+    </form>
+
+}
