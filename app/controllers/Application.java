@@ -7,12 +7,13 @@ import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.index;
+import play.api.mvc.Cookie;
+import play.api.mvc.DiscardingCookie;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
+
 import java.util.List;
 
 import static play.libs.Json.toJson;
@@ -23,24 +24,23 @@ public class Application extends Controller {
         return ok(index.render());
     }
 
-    private String loggedUserName;
-
     @Transactional
     public Result addUser() {
         User user = Form.form(User.class).bindFromRequest().get();
         List<User> users = (List<User>) JPA.em().createQuery("select u from User u").getResultList();
         for (User u : users){
             if (user.name.equals(u.name)){
+                response().setCookie("Eventus", u.id);
                 return redirect(routes.Application.index());
             }
         }
         try {
             JPA.em().persist(user);
-            loggedUserName = user.name;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
 
         }
+        response().setCookie("Eventus", user.id);
         return redirect(routes.Application.index());
     }
 
@@ -53,12 +53,8 @@ public class Application extends Controller {
 
     @Transactional
     public Result addEvent() {
-//        User user = Form.form(User.class).bindFromRequest().get();
-//        JPA.em().persist(user);
-        System.out.println(Form.form().bindFromRequest().get("username"));
         Event event = Form.form(Event.class).bindFromRequest().get();
-        event.user = JPA.em().find(User.class, Form.form().bindFromRequest().get("username"));
-
+        event.user = JPA.em().find(User.class, request().cookies().get("Eventus").value());
         JPA.em().persist(event);
         return redirect(routes.Application.index());
     }
@@ -72,7 +68,7 @@ public class Application extends Controller {
     @Transactional
     public Result postComment(){
         Comment comment = Form.form(Comment.class).bindFromRequest().get();
-        comment.author = JPA.em().find(User.class, Form.form().bindFromRequest().get("authorId"));
+        comment.author = JPA.em().find(User.class, request().cookies().get("Eventus").value());
         comment.event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("eventId"));
         JPA.em().persist(comment);
         return redirect(routes.Application.index());
@@ -85,8 +81,11 @@ public class Application extends Controller {
         return ok(toJson(comments));
     }
 
-    public Result getLogged(){
-        return ok(toJson(loggedUserName));
+    public Result logout(){
+        response().discardCookie("Eventus");
+        return redirect(routes.Application.index());
     }
+
+
 
 }

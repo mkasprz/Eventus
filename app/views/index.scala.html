@@ -1,6 +1,6 @@
 @()
 
-@main("EventUs - events for us") {
+@main("EventUs - Events for Us") {
 
     <script>
         var recoveredName;
@@ -47,7 +47,7 @@
       function checkLoginState() {
         FB.getLoginStatus(function(response) {
           statusChangeCallback(response);
-        });
+        }, {scope: 'email'});
 
       }
 
@@ -93,7 +93,7 @@
 
     </script>
 
-    <fb:login-button scope="public_profile" onlogin="checkLoginState();">
+    <fb:login-button scope="public_profile, email" onlogin="checkLoginState();">
     </fb:login-button>
 
     <div
@@ -119,12 +119,10 @@
     </form>
 
     <form method="POST" action="@routes.Application.addEvent()">
-        <input type="text" name="username"/>
         <input type="text" name="name"/>
         <button>Add Event</button>
     </form>
     <form method="POST" action="@routes.Application.postComment()">
-        <input type="text" name="authorId"/>
         <input type="text" name="contents"/>
         <input type="text" name="eventId"/>
 
@@ -133,6 +131,10 @@
 
     <form action="/events">
         <button>Events</button>
+    </form>
+
+    <form action="/logout">
+        <button>Logout</button>
     </form>
 
 }
