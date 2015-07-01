@@ -36,8 +36,10 @@ public class Application extends Controller {
     public Result addEvent() {
 //        User user = Form.form(User.class).bindFromRequest().get();
 //        JPA.em().persist(user);
+        System.out.println(Form.form().bindFromRequest().get("username"));
         Event event = Form.form(Event.class).bindFromRequest().get();
-//        event.user = user;
+        event.user = JPA.em().find(User.class, Form.form().bindFromRequest().get("username"));
+
         JPA.em().persist(event);
         return redirect(routes.Application.index());
     }
