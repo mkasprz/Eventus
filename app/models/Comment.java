@@ -18,6 +18,9 @@ public class Comment {
     @ManyToOne
     public User author;
 
+    @ManyToOne
+    public Event event;
+
     private int score = 0;
 
     public void increaseScore(){
@@ -28,4 +31,7 @@ public class Comment {
         score--;
     }
 
+    public int getScore() {
+        return score;
+    }
 }

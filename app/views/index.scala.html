@@ -123,6 +123,13 @@
         <input type="text" name="name"/>
         <button>Add Event</button>
     </form>
+    <form method="POST" action="@routes.Application.postComment()">
+        <input type="text" name="authorId"/>
+        <input type="text" name="contents"/>
+        <input type="text" name="eventId"/>
+
+        <button>Post Comment</button>
+    </form>
 
     <form action="/events">
         <button>Events</button>

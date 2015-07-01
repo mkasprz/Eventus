@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Comment;
 import models.Event;
 import models.User;
 import play.data.Form;
@@ -9,6 +10,9 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import static play.libs.Json.toJson;
@@ -18,6 +22,8 @@ public class Application extends Controller {
     public Result index() {
         return ok(index.render());
     }
+
+    private String loggedUserName;
 
     @Transactional
     public Result addUser() {
@@ -30,6 +36,7 @@ public class Application extends Controller {
         }
         try {
             JPA.em().persist(user);
+            loggedUserName = user.name;
         } catch (Exception e){
             e.printStackTrace();
 
@@ -60,6 +67,26 @@ public class Application extends Controller {
     public Result getEvents() {
         List<Event> events = (List<Event>) JPA.em().createQuery("select e from Event e").getResultList();
         return ok(toJson(events));
+    }
+
+    @Transactional
+    public Result postComment(){
+        Comment comment = Form.form(Comment.class).bindFromRequest().get();
+        comment.author = JPA.em().find(User.class, Form.form().bindFromRequest().get("authorId"));
+        comment.event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("eventId"));
+        JPA.em().persist(comment);
+        return redirect(routes.Application.index());
+
+    }
+
+    @Transactional
+    public Result getComments(){
+        List<Comment> comments = (List<Comment>) JPA.em().createQuery("select c from Comment c").getResultList();
+        return ok(toJson(comments));
+    }
+
+    public Result getLogged(){
+        return ok(toJson(loggedUserName));
     }
 
 }

@@ -16,11 +16,4 @@ public class Event {
     @ManyToOne
     public User user;
 
-    @OneToMany
-    public List<Comment> comments = new LinkedList<Comment>();
-
-    public void addComment(Comment comment){
-        comments.add(comment);
-    }
-
 }

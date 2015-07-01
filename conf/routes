@@ -8,6 +8,9 @@ POST    /event                      controllers.Application.addEvent()
 GET     /events                     controllers.Application.getEvents()
 POST    /user                       controllers.Application.addUser()
 GET     /users                      controllers.Application.getUsers()
+POST    /comment                    controllers.Application.postComment()
+GET     /comments                   controllers.Application.getComments()
+GET     /logged                     controllers.Application.getLogged()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
