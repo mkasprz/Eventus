@@ -22,9 +22,21 @@ public class Application extends Controller {
     @Transactional
     public Result addUser() {
         User user = Form.form(User.class).bindFromRequest().get();
-        JPA.em().persist(user);
+        List<User> users = (List<User>) JPA.em().createQuery("select u from User u").getResultList();
+        for (User u : users){
+            if (user.name.equals(u.name)){
+                return redirect(routes.Application.index());
+            }
+        }
+        try {
+            JPA.em().persist(user);
+        } catch (Exception e){
+            e.printStackTrace();
+
+        }
         return redirect(routes.Application.index());
     }
+
 
     @Transactional
     public Result getUsers() {
