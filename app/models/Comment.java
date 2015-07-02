@@ -33,7 +33,7 @@ public class Comment {
     }
 
     @OneToMany
-    public List<User> upvotedBy;
+    public List<User> votedBy;
 
 //    @OneToMany
 //    public List<User> downvotedBy;

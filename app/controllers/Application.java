@@ -99,7 +99,7 @@ public class Application extends Controller {
 //        }
 
         comment.increaseScore();
-        comment.upvotedBy.add(user);
+        comment.votedBy.add(user);
 
         return redirect(routes.Application.index());
     }
@@ -115,9 +115,16 @@ public class Application extends Controller {
 //        }
 
         comment.decreaseScore();
-        comment.upvotedBy.add(user);
+        comment.votedBy.add(user);
 
         return redirect(routes.Application.index());
+    }
+
+    @Transactional
+    public Result getTweetsByHashtag(){
+        Event event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("id"));
+
+        return redirect("https://twitter.com/search?q=%23" + event.hashtag);
     }
 
 
