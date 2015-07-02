@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by piotr on 01.07.15.
@@ -30,6 +31,9 @@ public class Comment {
     public void decreaseScore(){
         score--;
     }
+
+    @OneToMany
+    public List<User> propsedBy;
 
     public int getScore() {
         return score;

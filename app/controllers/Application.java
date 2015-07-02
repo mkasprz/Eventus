@@ -92,6 +92,37 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
+    @Transactional
+    public Result increaseScore(){
+        User user = JPA.em().find(User.class, request().cookies().get("Eventus").value());
+
+        Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
+
+        if (comment.propsedBy.contains(user)){
+            return redirect(routes.Application.index());
+        }
+
+        comment.increaseScore();
+        comment.propsedBy.add(user);
+
+        return redirect(routes.Application.index());
+    }
+
+    @Transactional
+    public Result decreaseScore(){
+        User user = JPA.em().find(User.class, request().cookies().get("Eventus").value());
+
+        Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
+
+        if (comment.propsedBy.contains(user)){
+            return redirect(routes.Application.index());
+        }
+
+        comment.decreaseScore();
+        comment.propsedBy.add(user);
+
+        return redirect(routes.Application.index());
+    }
 
 
 }

@@ -5,6 +5,7 @@
     <script>
         var recoveredName;
         var recoveredId;
+        var recoveredMail;
         function post(path, params, method) {
             method = method || "post"; // Set method to post by default if not specified.
 
@@ -81,13 +82,14 @@
             'Thanks for logging in, ' + response.name + '!';
             recoveredName = response.name;
             recoveredId = response.id;
+            recoveredMail = response.email;
 
         });
       }
 
       function proceed(){
         if (recoveredName != null){
-          post('/user', {name: recoveredName + "#" + recoveredId});
+          post('/user', {name: recoveredName + "#" + recoveredId, email: recoveredMail});
         }
       }
 
@@ -129,6 +131,16 @@
         <input type="text" name="eventId"/>
 
         <button>Post Comment</button>
+    </form>
+
+    <form method="POST" action="@routes.Application.increaseScore()">
+        <input type="text" name="id"/>
+        <button>Props Comment</button>
+    </form>
+
+    <form method="POST" action="@routes.Application.decreaseScore()">
+        <input type="text" name="id"/>
+        <button>Deprops Comment</button>
     </form>
 
     <form action="/events">
