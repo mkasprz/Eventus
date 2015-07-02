@@ -20,14 +20,19 @@ public class Application extends Controller {
         return ok(index.render());
     }
 
+    public Result login() {
+        session("email", Form.form().bindFromRequest().get("email"));
+        return redirect(routes.Application.index());
+    }
+
     @Transactional
     public Result addUser() {
 
-        Form userForm = Form.form(User.class).bindFromRequest();
+        Form<User> userForm = Form.form(User.class).bindFromRequest();
         if (!userForm.hasErrors()) {
 //            return badRequest();
 
-            User user = (User) userForm.get();
+            User user = userForm.get();
             JPA.em().persist(userForm.get());
             session().clear();
             session("email", user.email);

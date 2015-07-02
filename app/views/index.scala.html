@@ -115,10 +115,15 @@
 
     <ul id="events"></ul>
 
+    <form method="POST" action="@routes.Application.login()">
+        <input type="text" name="email"/>
+        <button>Login</button>
+    </form>
+
     <form method="POST" action="@routes.Application.addUser()">
         <input type="text" name="email" placeholder="Email address"/>
         <input type="text" name="name" placeholder="User Name"/>
-        <button>Add User</button>
+        <button>Register User</button>
     </form>
 
     <form method="POST" action="@routes.Application.addEvent()">
@@ -145,15 +150,15 @@
     </form>
 
     <form action="/events">
-        <button>Event List</button>
+        <button>Events</button>
     </form>
 
     <form action="/users">
-        <button>User List</button>
+        <button>Users</button>
     </form>
 
     <form action="/comments">
-        <button>Comment List</button>
+        <button>Comments</button>
     </form>
 
     <form action="/logout">
