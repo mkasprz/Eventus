@@ -18,4 +18,5 @@ public class Event {
     @ManyToOne
     public User user;
 
+    public String hashtag;
 }
