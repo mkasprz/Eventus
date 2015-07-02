@@ -33,7 +33,11 @@ public class Comment {
     }
 
     @OneToMany
-    public List<User> propsedBy;
+    public List<User> upvotedBy;
+
+//    @OneToMany
+//    public List<User> downvotedBy;
+
 
     public int getScore() {
         return score;

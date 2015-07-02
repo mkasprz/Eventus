@@ -20,8 +20,12 @@ public class Application extends Controller {
         return ok(index.render());
     }
 
+    @Transactional
     public Result login() {
-        session("email", Form.form().bindFromRequest().get("email"));
+        User user = JPA.em().find(User.class, Form.form().bindFromRequest().get("email"));
+        if (user != null) {
+            session("email", user.email);
+        }
         return redirect(routes.Application.index());
     }
 
@@ -90,9 +94,9 @@ public class Application extends Controller {
 
         Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
 
-        if (comment.upvotedBy.contains(user) || comment.downvotedBy.contains(user)){
-            return redirect(routes.Application.index());
-        }
+//        if (comment.upvotedBy.contains(user) || comment.downvotedBy.contains(user)){
+//            return redirect(routes.Application.index());
+//        }
 
         comment.increaseScore();
         comment.upvotedBy.add(user);
@@ -106,12 +110,12 @@ public class Application extends Controller {
 
         Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
 
-        if (comment.upvotedBy.contains(user) || comment.downvotedBy.contains(user)){
-            return redirect(routes.Application.index());
-        }
+//        if (comment.upvotedBy.contains(user) || comment.downvotedBy.contains(user)){
+//            return redirect(routes.Application.index());
+//        }
 
         comment.decreaseScore();
-        comment.downvotedBy.add(user);
+        comment.upvotedBy.add(user);
 
         return redirect(routes.Application.index());
     }
