@@ -29,15 +29,31 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
+    public void add (User user) {
+        JPA.em().persist(user);
+    }
+
     @Transactional
     public Result addUser() {
 
-        Form<User> userForm = Form.form(User.class).bindFromRequest();
-        if (!userForm.hasErrors()) {
-//            return badRequest();
 
-            User user = userForm.get();
-            JPA.em().persist(userForm.get());
+        Form<User> form = Form.form(User.class).bindFromRequest();
+        if (!form.hasErrors()) {
+
+//            return badRequest(index.render(form));
+
+            User user = form.get();
+//            JPA.em().persist(user);
+
+            try {
+                JPA.withTransaction(() -> {
+                    JPA.em().persist(user);
+                });
+            } catch (Exception e) {
+                System.out.println("Cannot insert.");
+            }
+
+
             session().clear();
             session("email", user.email);
 //            response().setCookie("Eventus", user.id);
