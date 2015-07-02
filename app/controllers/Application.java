@@ -96,12 +96,12 @@ public class Application extends Controller {
 
         Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
 
-        if (comment.propsedBy.contains(user)){
+        if (comment.upvotedBy.contains(user) || comment.downvotedBy.contains(user)){
             return redirect(routes.Application.index());
         }
 
         comment.increaseScore();
-        comment.propsedBy.add(user);
+        comment.upvotedBy.add(user);
 
         return redirect(routes.Application.index());
     }
@@ -112,12 +112,12 @@ public class Application extends Controller {
 
         Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
 
-        if (comment.propsedBy.contains(user)){
+        if (comment.upvotedBy.contains(user) || comment.downvotedBy.contains(user)){
             return redirect(routes.Application.index());
         }
 
         comment.decreaseScore();
-        comment.propsedBy.add(user);
+        comment.downvotedBy.add(user);
 
         return redirect(routes.Application.index());
     }

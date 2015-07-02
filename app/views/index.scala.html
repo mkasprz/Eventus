@@ -89,7 +89,7 @@
 
       function proceed(){
         if (recoveredName != null){
-          post('/user', {name: recoveredName + "#" + recoveredId, email: recoveredMail});
+          post('/user', {name: recoveredName, email: recoveredMail});
         }
       }
 
