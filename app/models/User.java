@@ -1,14 +1,16 @@
 package models;
 
+import play.data.validation.Constraints;
+
 import javax.persistence.*;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public String id;
-    public String name;
-    
+    @Constraints.Email
     public String email;
+
+    public String name;
+
 }

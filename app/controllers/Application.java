@@ -7,12 +7,8 @@ import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
 import views.html.index;
-import play.api.mvc.Cookie;
-import play.api.mvc.DiscardingCookie;
-
 
 import java.util.List;
 
@@ -26,33 +22,43 @@ public class Application extends Controller {
 
     @Transactional
     public Result addUser() {
-        User user = Form.form(User.class).bindFromRequest().get();
-        List<User> users = (List<User>) JPA.em().createQuery("select u from User u").getResultList();
-        for (User u : users){
-            if (user.name.equals(u.name)){
-                response().setCookie("Eventus", u.id);
-                return redirect(routes.Application.index());
-            }
+
+//        User user = Form.form(User.class).bindFromRequest().get();
+//        if (!JPA.em().contains(user)) {
+//            JPA.em().persist(user);
+//        }
+//        List<User> users = (List<User>) JPA.em().createQuery("select u from User u").getResultList();
+//        for (User u : users){
+//            if (user.name.equals(u.name)){
+//                return redirect(routes.Application.index());
+//            }
+//
+        if (JPA.em().find(User.class, Form.form().bindFromRequest().get("email")) == null) {
+            User user = Form.form(User.class).bindFromRequest().get();
+            JPA.em().persist(user);
+//            response().setCookie("Eventus", user.id);
         }
         try {
-            JPA.em().persist(user);
-        } catch (Exception e) {
-            e.printStackTrace();
+            redirect(routes.Application.index());
+        } catch (Exception e)
+        {}
 
-        }
-        response().setCookie("Eventus", user.id);
-        return redirect(routes.Application.index());
+        return ok();
+//        return ok();
+
     }
-
 
     @Transactional
     public Result getUsers() {
         List<User> users = (List<User>) JPA.em().createQuery("select u from User u").getResultList();
-        return  ok(toJson(users));
+        return ok(toJson(users));
     }
 
     @Transactional
     public Result addEvent() {
+//        User user = Form.form(User.class).bindFromRequest().get();
+//        JPA.em().persist(user);
+        System.out.println(Form.form().bindFromRequest().get("username"));
         Event event = Form.form(Event.class).bindFromRequest().get();
         event.user = JPA.em().find(User.class, request().cookies().get("Eventus").value());
         JPA.em().persist(event);
