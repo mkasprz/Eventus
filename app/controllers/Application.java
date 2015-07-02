@@ -109,6 +109,10 @@ public class Application extends Controller {
         User user = JPA.em().find(User.class, session().get("email"));
 
         Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
+        if (comment == null || comment.votedBy.contains(user)){
+            return redirect(routes.Application.index());
+
+        }
 
 //        if (comment.upvotedBy.contains(user) || comment.downvotedBy.contains(user)){
 //            return redirect(routes.Application.index());
@@ -125,6 +129,10 @@ public class Application extends Controller {
         User user = JPA.em().find(User.class, session().get("email"));
 
         Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
+        if (comment == null || comment.votedBy.contains(user)){
+            return redirect(routes.Application.index());
+
+        }
 
 //        if (comment.upvotedBy.contains(user) || comment.downvotedBy.contains(user)){
 //            return redirect(routes.Application.index());
@@ -139,6 +147,9 @@ public class Application extends Controller {
     @Transactional
     public Result getTweetsByHashtag(){
         Event event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("id"));
+        if (event == null){
+            return redirect(routes.Application.index());
+        }
 
         return redirect("https://twitter.com/search?q=%23" + event.hashtag);
     }
