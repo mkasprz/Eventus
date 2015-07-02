@@ -117,34 +117,43 @@
 
     <form method="POST" action="@routes.Application.addUser()">
         <input type="text" name="email" placeholder="Email address"/>
-        <input type="text" name="name" placeholder="Name"/>
+        <input type="text" name="name" placeholder="User Name"/>
         <button>Add User</button>
     </form>
 
     <form method="POST" action="@routes.Application.addEvent()">
-        <input type="text" name="name"/>
+        <input type="text" name="name" placeholder="Event Name"/>
+        <input type="text" name="description" placeholder="Event Description"/>
         <button>Add Event</button>
     </form>
 
     <form method="POST" action="@routes.Application.postComment()">
-        <input type="text" name="contents"/>
-        <input type="text" name="eventId"/>
+        <input type="text" name="contents" placeholder="Comment Contents"/>
+        <input type="text" name="eventId" placeholder="Event Id"/>
 
         <button>Post Comment</button>
     </form>
 
     <form method="POST" action="@routes.Application.increaseScore()">
-        <input type="text" name="id"/>
+        <input type="text" name="id" placeholder="Comment Id"/>
         <button>Props Comment</button>
     </form>
 
     <form method="POST" action="@routes.Application.decreaseScore()">
-        <input type="text" name="id"/>
+        <input type="text" name="id" placeholder="Comment id"/>
         <button>Deprops Comment</button>
     </form>
 
     <form action="/events">
-        <button>Events</button>
+        <button>Event List</button>
+    </form>
+
+    <form action="/users">
+        <button>User List</button>
+    </form>
+
+    <form action="/comments">
+        <button>Comment List</button>
     </form>
 
     <form action="/logout">

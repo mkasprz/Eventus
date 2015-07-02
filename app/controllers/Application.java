@@ -7,8 +7,12 @@ import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.index;
+import play.api.mvc.Cookie;
+import play.api.mvc.DiscardingCookie;
+
 
 import java.util.List;
 
@@ -36,16 +40,13 @@ public class Application extends Controller {
         if (JPA.em().find(User.class, Form.form().bindFromRequest().get("email")) == null) {
             User user = Form.form(User.class).bindFromRequest().get();
             JPA.em().persist(user);
+            session().clear();
+            session("email", user.email);
 //            response().setCookie("Eventus", user.id);
         }
-        try {
-            redirect(routes.Application.index());
-        } catch (Exception e)
-        {}
 
-        return ok();
-//        return ok();
-
+        
+        return redirect(routes.Application.index());
     }
 
     @Transactional
@@ -56,11 +57,8 @@ public class Application extends Controller {
 
     @Transactional
     public Result addEvent() {
-//        User user = Form.form(User.class).bindFromRequest().get();
-//        JPA.em().persist(user);
-        System.out.println(Form.form().bindFromRequest().get("username"));
         Event event = Form.form(Event.class).bindFromRequest().get();
-        event.user = JPA.em().find(User.class, request().cookies().get("Eventus").value());
+        event.user = JPA.em().find(User.class, session().get("email"));
         JPA.em().persist(event);
         return redirect(routes.Application.index());
     }
@@ -74,7 +72,7 @@ public class Application extends Controller {
     @Transactional
     public Result postComment(){
         Comment comment = Form.form(Comment.class).bindFromRequest().get();
-        comment.author = JPA.em().find(User.class, request().cookies().get("Eventus").value());
+        comment.author = JPA.em().find(User.class, session().get("email"));
         comment.event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("eventId"));
         JPA.em().persist(comment);
         return redirect(routes.Application.index());
@@ -88,13 +86,13 @@ public class Application extends Controller {
     }
 
     public Result logout(){
-        response().discardCookie("Eventus");
+        session().clear();
         return redirect(routes.Application.index());
     }
 
     @Transactional
     public Result increaseScore(){
-        User user = JPA.em().find(User.class, request().cookies().get("Eventus").value());
+        User user = JPA.em().find(User.class, session().get("email"));
 
         Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
 
@@ -110,7 +108,7 @@ public class Application extends Controller {
 
     @Transactional
     public Result decreaseScore(){
-        User user = JPA.em().find(User.class, request().cookies().get("Eventus").value());
+        User user = JPA.em().find(User.class, session().get("email"));
 
         Comment comment = JPA.em().find(Comment.class, Form.form().bindFromRequest().get("id"));
 

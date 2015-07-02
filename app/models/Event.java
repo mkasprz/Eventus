@@ -13,6 +13,8 @@ public class Event {
 
     public String name;
 
+    public String description;
+
     @ManyToOne
     public User user;
 
