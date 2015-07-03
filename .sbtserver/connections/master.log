@@ -1,0 +1,7 @@
+New log file opened at Thu Jul 02 13:20:18 CEST 2015 by 4595@piotr-Inspiron-N5110
+Taking next connection to: 50330
+New client attempting to connect on port: 47616-50330
+  Address = /127.0.1.1:50330
+This client on port 47616 has uuid 7cab5263-c48a-45b5-81f5-36603253e1b3 configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
+Connected Clients: activator-7cab5263-c48a-45b5-81f5-36603253e1b3
+Taking next connection to: 50330
