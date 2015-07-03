@@ -116,20 +116,20 @@
     <ul id="events"></ul>
 
     <form method="POST" action="@routes.Application.login()">
-        <input type="text" name="email" placeholder="Login"/>
+        <input type="email" name="email" placeholder="Login"/>
         <button>Login</button>
     </form>
 
     <form method="POST" action="@routes.Application.addUser()">
-        <input type="text" name="email" placeholder="Email address"/>
+        <input type="email" name="email" placeholder="Email address"/>
         <input type="text" name="name" placeholder="User Name" required pattern="[a-zA-Z0-9]+"/>
         <button>Register User</button>
     </form>
 
     <form method="POST" action="@routes.Application.addEvent()">
-        <input type="text" name="name" placeholder="Event Name" required pattern="[a-zA-Z0-9]+"/>
+        <input type="text" name="name" placeholder="Event Name" required pattern=".+"/>
         <input type="text" name="description" placeholder="Event Description"/>
-        <input type="text" name="hashtag" placeholder="Hashtag" required pattern="[a-zA-Z0-9]+"/>
+        <input type="text" name="hashtag" placeholder="Hashtag" required pattern="[0-9A-Za-z]*"/>
         <button>Add Event</button>
     </form>
 

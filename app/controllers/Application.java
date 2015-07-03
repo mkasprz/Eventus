@@ -38,27 +38,27 @@ public class Application extends Controller {
 
 
         Form<User> form = Form.form(User.class).bindFromRequest();
-        if (!form.hasErrors()) {
+//        if (!form.hasErrors()) {
 
 //            return badRequest(index.render(form));
 
-            User user = form.get();
+        User user = form.get();
 //            JPA.em().persist(user);
 
-            try {
-                JPA.withTransaction(() -> {
-                    JPA.em().persist(user);
-                });
-            } catch (Exception e) {
-                System.out.println("Cannot insert.");
-            }
+        try {
+            JPA.withTransaction(() -> {
+                JPA.em().persist(user);
+            });
+        } catch (Exception e) {
+            System.out.println("Cannot insert.");
+        }
 
 
-            session().clear();
-            session("email", user.email);
+        session().clear();
+        session("email", user.email);
 //            response().setCookie("Eventus", user.id);
 //        }
-        }
+//        }
 
         return redirect(routes.Application.index());
     }
