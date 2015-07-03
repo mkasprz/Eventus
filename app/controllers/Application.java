@@ -159,14 +159,12 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
-    @Transactional
-    public Result getTweetsByHashtag(){
-        Event event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("id"));
-        if (event == null){
-            return redirect(routes.Application.index());
-        }
-
-        return redirect("https://twitter.com/search?q=%23" + event.hashtag);
+    public Result getTweetsByHashtag(String hashtag){
+//        Event event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("id"));
+//        if (event == null){
+//            return redirect(routes.Application.index());
+//        }
+        return redirect("https://twitter.com/search?q=%23" + hashtag);
     }
 
 
