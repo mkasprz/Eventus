@@ -1,4 +1,4 @@
 $ ->
-  $.get "/events", (events) ->
+  $.get '/events', (events) ->
     $.each events, (index, event) ->
-      $("#events").append $("<li>").text event.id + ": " + event.name + " - " + event.description + " #" + event.hashtag
+      $('#events').append $('<li><a href = "/events/' + event.id + '">' + event.id + ': ' + event.name + ' - ' + event.description + ' #' + event.hashtag + '</a>').text

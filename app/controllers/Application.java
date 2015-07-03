@@ -71,9 +71,6 @@ public class Application extends Controller {
 
     @Transactional
     public Result addEvent() {
-        if (Form.form().get("name") == null){
-            return redirect(routes.Application.index());
-        }
         Event event = Form.form(Event.class).bindFromRequest().get();
         event.user = JPA.em().find(User.class, session().get("email"));
         JPA.em().persist(event);
