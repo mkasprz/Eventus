@@ -71,6 +71,9 @@ public class Application extends Controller {
 
     @Transactional
     public Result addEvent() {
+        if (Form.form().get("name") == null){
+            return redirect(routes.Application.index());
+        }
         Event event = Form.form(Event.class).bindFromRequest().get();
         event.user = JPA.em().find(User.class, session().get("email"));
         JPA.em().persist(event);
@@ -91,13 +94,15 @@ public class Application extends Controller {
 
     @Transactional
     public Result postComment() {
+        Event event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("eventId"));
+        if (event == null){
+            return redirect(routes.Application.index());
+        }
         Comment comment = Form.form(Comment.class).bindFromRequest().get();
         comment.author = JPA.em().find(User.class, session().get("email"));
-        Event event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("eventId"));
         JPA.em().persist(comment);
         event.comments.add(comment);
         return redirect(routes.Application.index());
-
     }
 
     @Transactional

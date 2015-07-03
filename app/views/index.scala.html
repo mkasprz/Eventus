@@ -122,12 +122,12 @@
 
     <form method="POST" action="@routes.Application.addUser()">
         <input type="text" name="email" placeholder="Email address"/>
-        <input type="text" name="name" placeholder="User Name"/>
+        <input type="text" name="name" placeholder="User Name" required pattern="[a-zA-Z0-9]+"/>
         <button>Register User</button>
     </form>
 
     <form method="POST" action="@routes.Application.addEvent()">
-        <input type="text" name="name" placeholder="Event Name"/>
+        <input type="text" name="name" placeholder="Event Name" required pattern="[a-zA-Z0-9]+"/>
         <input type="text" name="description" placeholder="Event Description"/>
         <input type="text" name="hashtag" placeholder="Hashtag" required pattern="[a-zA-Z0-9]+"/>
         <button>Add Event</button>
@@ -135,23 +135,23 @@
 
     <form method="POST" action="@routes.Application.postComment()">
         <input type="text" name="contents" placeholder="Comment Contents"/>
-        <input type="text" name="eventId" placeholder="Event Id"/>
+        <input type="text" name="eventId" placeholder="Event Id" required pattern="[0-9]+"/>
 
         <button>Post Comment</button>
     </form>
 
     <form method="POST" action="@routes.Application.increaseScore()">
-        <input type="text" name="id" placeholder="Comment Id"/>
+        <input type="text" name="id" placeholder="Comment Id" required pattern="[0-9]+"/>
         <button>Props Comment</button>
     </form>
 
     <form method="POST" action="@routes.Application.decreaseScore()">
-        <input type="text" name="id" placeholder="Comment id"/>
+        <input type="text" name="id" placeholder="Comment id" required pattern="[0-9]+"/>
         <button>Deprops Comment</button>
     </form>
 
     <form method="POST" action="@routes.Application.getTweetsByHashtag()">
-        <input type="text" name="id" placeholder="Event id"/>
+        <input type="text" name="id" placeholder="Event id" required pattern="[0-9]+"/>
         <button>Get Tweets</button>
     </form>
 
