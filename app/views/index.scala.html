@@ -129,7 +129,7 @@
     <form method="POST" action="@routes.Application.addEvent()">
         <input type="text" name="name" placeholder="Event Name"/>
         <input type="text" name="description" placeholder="Event Description"/>
-        <input type="text" name="hashtag" placeholder="Hashtag"/>
+        <input type="text" name="hashtag" placeholder="Hashtag" required pattern="[a-zA-Z0-9]+"/>
         <button>Add Event</button>
     </form>
 
