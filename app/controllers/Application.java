@@ -78,6 +78,12 @@ public class Application extends Controller {
     }
 
     @Transactional(readOnly = true)
+    public Result getEvent(String id) {
+        List<Event> events = (List<Event>) JPA.em().createQuery("select e from Event e where e.id = '" + id + "'").getResultList();
+        return ok(toJson(events));
+    }
+
+    @Transactional(readOnly = true)
     public Result getEvents() {
         List<Event> events = (List<Event>) JPA.em().createQuery("select e from Event e").getResultList();
         return ok(toJson(events));
@@ -96,6 +102,12 @@ public class Application extends Controller {
     @Transactional
     public Result getComments() {
         List<Comment> comments = (List<Comment>) JPA.em().createQuery("select c from Comment c").getResultList();
+        return ok(toJson(comments));
+    }
+
+    @Transactional
+    public Result getComment(String id) {
+        List<Comment> comments = (List<Comment>) JPA.em().createQuery("select c from Comment c where c.id = '" + id + "'").getResultList();
         return ok(toJson(comments));
     }
 
