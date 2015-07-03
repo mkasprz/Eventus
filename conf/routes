@@ -3,20 +3,20 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-POST    /event                      controllers.Application.addEvent()
-GET     /events/:id                  controllers.Application.getEvent(id)
-GET     /events                     controllers.Application.getEvents()
-POST    /user                       controllers.Application.addUser()
-GET     /users                      controllers.Application.getUsers()
-POST    /comment                    controllers.Application.postComment()
-GET     /comments                   controllers.Application.getComments()
-GET     /comments/:id           controllers.Application.getComment(id)
-POST    /login                      controllers.Application.login()
-GET     /logout                     controllers.Application.logout()
-POST    /inccomm                    controllers.Application.increaseScore()
-POST    /deccomm                    controllers.Application.decreaseScore()
-POST    /hashtag                    controllers.Application.getTweetsByHashtag()
+GET     /               controllers.Application.index()
+POST    /event          controllers.Application.addEvent()
+GET     /events/:id     controllers.Application.getEvent(id)
+GET     /events         controllers.Application.getEvents()
+POST    /user           controllers.Application.addUser()
+GET     /users          controllers.Application.getUsers()
+POST    /comment        controllers.Application.postComment()
+GET     /comments/:id   controllers.Application.getComment(id)
+GET     /comments       controllers.Application.getComments()
+POST    /login          controllers.Application.login()
+GET     /logout         controllers.Application.logout()
+POST    /inccomm        controllers.Application.increaseScore()
+POST    /deccomm        controllers.Application.decreaseScore()
+POST    /hashtag        controllers.Application.getTweetsByHashtag()
 
 
 
