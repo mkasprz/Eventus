@@ -19,8 +19,8 @@ public class Comment {
     @ManyToOne
     public User author;
 
-    @ManyToOne
-    public Event event;
+//    @ManyToOne
+//    public Event event;
 
     private int score = 0;
 

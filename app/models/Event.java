@@ -18,5 +18,8 @@ public class Event {
     @ManyToOne
     public User user;
 
+    @OneToMany
+    public List<Comment> comments;
+
     public String hashtag;
 }

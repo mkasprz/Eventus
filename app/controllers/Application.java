@@ -93,8 +93,9 @@ public class Application extends Controller {
     public Result postComment() {
         Comment comment = Form.form(Comment.class).bindFromRequest().get();
         comment.author = JPA.em().find(User.class, session().get("email"));
-        comment.event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("eventId"));
+        Event event = JPA.em().find(Event.class, Form.form().bindFromRequest().get("eventId"));
         JPA.em().persist(comment);
+        event.comments.add(comment);
         return redirect(routes.Application.index());
 
     }
